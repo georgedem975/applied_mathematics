@@ -1,43 +1,55 @@
-#прикладная математика
+# прикладная математика
 import numpy as np
 import matplotlib.pyplot as plt
 import statistics
 
 
-#дифференционарование
+# дифференционарование
 
-#численное вычисление дифференциала
+# численное вычисление дифференциала
 def diff(x0, delta, func):
     return (func(x0 + delta / 2) - func(x0 - delta / 2)) / delta
 
 
-#правая разностная производная
+def second_order_diff(x, h, f):
+    """Вычисляет производную функции f в точке x методом второго порядка с шагом h."""
+    f_x = f(x)
+    f_x_plus_h = f(x + h)
+    f_x_minus_h = f(x - h)
+    f_x_plus_2h = f(x + 2*h)
+    f_x_minus_2h = f(x - 2*h)
+    derivative = (f_x_minus_2h - 8*f_x_minus_h + 8*f_x_plus_h - f_x_plus_2h)/(12*h)
+    return derivative
+
+
+# правая разностная производная
 def right_diff(x0, delta, func):
     return (func(x0 + delta) - func(x0)) / delta
 
-#левая разностная производная
+
+# левая разностная производная
 def left_diff(x0, delta, func):
     return (func(x0) - func(x0 - delta)) / delta
 
 
-#функция(1)
+# функция(1)
 def func(x):
-    return x*np.sin(x)
+    return x * np.sin(x)
 
 
-#функция(2)
+# функция(2)
 def func_second(x):
     return np.cos(x)
 
 
-#дифференциал функции (1)
+# дифференциал функции (1)
 def diff_func(x):
-    return x*np.cos(x) + np.sin(x)
+    return x * np.cos(x) + np.sin(x)
 
 
-#интегрирование
+# интегрирование
 
-#метод левых прямоугольников
+# метод левых прямоугольников
 def left_rect(a, b, n, func):
     h = (b - a) / n
     sum = 0.0
@@ -46,7 +58,7 @@ def left_rect(a, b, n, func):
     return sum
 
 
-#метод правых прямоугольников
+# метод правых прямоугольников
 def right_rect(a, b, n, func):
     h = (b - a) / n
     sum = 0.0
@@ -55,7 +67,7 @@ def right_rect(a, b, n, func):
     return sum
 
 
-#метод средних прямоугольников
+# метод средних прямоугольников
 def central_rect(a, b, n, func):
     h = (b - a) / n
     sum = 0.0
@@ -64,17 +76,17 @@ def central_rect(a, b, n, func):
     return sum
 
 
-#метод трапеций
+# метод трапеций
 def trapeze(a, b, n, func):
     h = (b - a) / n
     sum = func(a) + func(b)
-    for i in range(1, n-1):
+    for i in range(1, n - 1):
         sum += 2 * func(a + i * h)
-    sum *= h/2
+    sum *= h / 2
     return sum
 
 
-#метод симпсона
+# метод симпсона
 def sympson(a, b, n, func):
     h = (b - a) / n
     sum = func(a) + func(b)
@@ -82,7 +94,7 @@ def sympson(a, b, n, func):
     for i in range(1, n - 1):
         k = 2 + 2 * (i % 2)
         sum += k * func(a + i * h)
-    sum *= h/3
+    sum *= h / 3
     return sum
 
 
@@ -100,7 +112,7 @@ if __name__ == '__main__':
     print()
 
     print(diff_func(x))
-    print(diff(x, 0.005, func))
+    print(second_order_diff(x, 0.005, func))
     print(left_diff(x, 0.005, func))
     print(right_diff(x, 0.005, func))
 
@@ -115,26 +127,26 @@ if __name__ == '__main__':
     print()
 
     plt.grid()
-    plt.plot(n, diff(n, 0.5, func_second), 'r--', n, diff(n, 0.5, func), 'b-')
+    plt.plot(n, second_order_diff(n, 0.5, func_second), 'r--', n, second_order_diff(n, 0.5, func), 'b-')
     plt.legend(['(cos(x))', '(sin(x)*x)'])
     plt.show()
 
-    print(statistics.stdev(diff(n, 0.003125, func)))
+    print(statistics.stdev(second_order_diff(n, 0.003125, func)))
 
     r_1 = [statistics.stdev(right_diff(n, 0.025, func)),
-         statistics.stdev(right_diff(n, 0.0125, func)),
-         statistics.stdev(right_diff(n, 0.00625, func)),
-         statistics.stdev(right_diff(n, 0.003125, func))]
+           statistics.stdev(right_diff(n, 0.0125, func)),
+           statistics.stdev(right_diff(n, 0.00625, func)),
+           statistics.stdev(right_diff(n, 0.003125, func))]
 
     r_2 = [statistics.stdev(left_diff(n, 0.025, func)),
-         statistics.stdev(left_diff(n, 0.0125, func)),
-         statistics.stdev(left_diff(n, 0.00625, func)),
-         statistics.stdev(left_diff(n, 0.003125, func))]
+           statistics.stdev(left_diff(n, 0.0125, func)),
+           statistics.stdev(left_diff(n, 0.00625, func)),
+           statistics.stdev(left_diff(n, 0.003125, func))]
 
-    r_3 = [statistics.stdev(diff(n, 0.025, func)),
-     statistics.stdev(diff(n, 0.0125, func)),
-     statistics.stdev(diff(n, 0.00625, func)),
-     statistics.stdev(diff(n, 0.003125, func))]
+    r_3 = [statistics.stdev(second_order_diff(n, 0.025, func)),
+           statistics.stdev(second_order_diff(n, 0.0125, func)),
+           statistics.stdev(second_order_diff(n, 0.00625, func)),
+           statistics.stdev(second_order_diff(n, 0.003125, func))]
 
     plt.grid()
     plt.plot(r_1, r_1, 'ro', r_2, r_2, 'bo', r_3, r_3, 'go')
@@ -173,6 +185,6 @@ if __name__ == '__main__':
              v, answers[2], 'go',
              v, answers[3], 'y*',
              v, answers[4], 'g^')
-    
+
     plt.legend(['right', 'left', 'center', 'trapeze', 'sympson'])
     plt.show()

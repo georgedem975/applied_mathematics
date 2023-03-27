@@ -39,8 +39,14 @@ __Теория__
 
     код:
     ```python
-    def diff(x0, delta, func):
-        return (func(x0 + delta / 2) - func(x0 - delta / 2)) / delta
+    def second_order_diff(x, h, f):
+    f_x = f(x)
+    f_x_plus_h = f(x + h)
+    f_x_minus_h = f(x - h)
+    f_x_plus_2h = f(x + 2*h)
+    f_x_minus_2h = f(x - 2*h)
+    derivative = (f_x_minus_2h - 8*f_x_minus_h + 8*f_x_plus_h - f_x_plus_2h)/(12*h)
+    return derivative
     ```
 
 2. Возьмите 2 произвольные функции. Вычислите аналитически производные этих функций. Постройте их графики, а также вычисленные значения численной производной в узлах сетки.
