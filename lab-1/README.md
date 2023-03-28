@@ -95,6 +95,9 @@ __Теория__
     ```
 
     ![2](https://github.com/georgedem975/applied_mathematics/blob/master/lab-1/assets/Figure_2.png)
+    ![3](https://github.com/georgedem975/applied_mathematics/blob/master/lab-1/assets/Figure_3.png)
+    ![4](https://github.com/georgedem975/applied_mathematics/blob/master/lab-1/assets/Figure_4.png)
+    ![5](https://github.com/georgedem975/applied_mathematics/blob/master/lab-1/assets/Figure_5.png)
 
 
     При уменьшении h среднеквадратичное отклонение начинает стремиться к 0. Чем меньше h тем точнее ответ.
@@ -215,7 +218,8 @@ print(right_rect(0, 1, 1000, func_integral))
 
 7. Проанализируйте зависимость отклонения численного ответа от аналитического в зависимости от шага при уменьшении его в 2, 4, 8 и 16 раз. Постройте график зависимости отклонения от величины шага.
 
-![3](https://github.com/georgedem975/applied_mathematics/blob/master/lab-1/assets/Figure_3.png)
+![6](https://github.com/georgedem975/applied_mathematics/blob/master/lab-1/assets/Figure_6.png)
+![7](https://github.com/georgedem975/applied_mathematics/blob/master/lab-1/assets/Figure_7.png)
 
 При уменьшении результат выполнения функций начинает стремиться к истинному значению.
 
