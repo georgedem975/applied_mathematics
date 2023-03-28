@@ -40,13 +40,13 @@ __Теория__
     код:
     ```python
     def second_order_diff(x, h, f):
-    f_x = f(x)
-    f_x_plus_h = f(x + h)
-    f_x_minus_h = f(x - h)
-    f_x_plus_2h = f(x + 2*h)
-    f_x_minus_2h = f(x - 2*h)
-    derivative = (f_x_minus_2h - 8*f_x_minus_h + 8*f_x_plus_h - f_x_plus_2h)/(12*h)
-    return derivative
+        f_x = f(x)
+        f_x_plus_h = f(x + h)
+        f_x_minus_h = f(x - h)
+        f_x_plus_2h = f(x + 2*h)
+        f_x_minus_2h = f(x - 2*h)
+        derivative = (f_x_minus_2h - 8*f_x_minus_h + 8*f_x_plus_h - f_x_plus_2h)/(12*h)
+        return derivative
     ```
 
 2. Возьмите 2 произвольные функции. Вычислите аналитически производные этих функций. Постройте их графики, а также вычисленные значения численной производной в узлах сетки.
@@ -55,56 +55,49 @@ __Теория__
 3. Найдите среднеквадратичные отклонения численных от истинных значений
 производной.
 
-    код:
-    ```python
-    print(statistics.stdev(diff(n, 0.5, func)))
-    ```
-
-    вывод:
-    ```python
-    0.41041159979851366
-    ```
 
 4.  Выполните предыдущий пункт при уменьшении шага (увеличения количества
 узлов) в 2, 4, 8 и 16. Как изменяется среднеквадратичное отклонение при измнении шага? Постройте график зависимости среднеквадратичного отклонения
 от величины шага.
-* в 2 раза:
+
     код:
     ```python
-    print(statistics.stdev(diff(n, 0.025, func)))
+    r_1 = [np.sqrt(math.fabs(np.mean(right_diff(n, 0.025, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(right_diff(n, 0.0125, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(right_diff(n, 0.00625, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(right_diff(n, 0.003125, func) - func_(n))))]
+
+    print(r_1)
+
+    r_2 = [np.sqrt(math.fabs(np.mean(left_diff(n, 0.025, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(left_diff(n, 0.0125, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(left_diff(n, 0.00625, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(left_diff(n, 0.003125, func) - func_(n))))]
+
+    print(r_2)
+
+    r_3 = [np.sqrt(math.fabs(np.mean(second_order_diff(n, 0.025, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(second_order_diff(n, 0.0125, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(second_order_diff(n, 0.00625, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(second_order_diff(n, 0.003125, func) - func_(n))))]
+
+    print(r_3)
     ```
     вывод:
     ```python
-    0.4198537455151593
+    [0.13071619467055418, 0.09268204779517762, 0.06562421990935367, 0.04643432765849665]
     ```
-* в 4 раза:
-    код:
     ```python
-    print(statistics.stdev(diff(n, 0.0125, func)))
+    [0.13211189494095094, 0.0931754933668976, 0.06579867846975462, 0.046496008003634966]
     ```
-    вывод:
     ```python
-    0.4198715800398994
+    [0.0001868039453414342, 4.6702767346332e-05, 1.1675924638483095e-05, 2.917065081658973e-06]
     ```
-* в 8 раз:
-    код:
-    ```python
-    print(statistics.stdev(diff(n, 0.00625, func)))
-    ```
-    вывод:
-    ```python
-    0.4198760387216906
-    ```
-* в 16 раз:
-    код:
-    ```python
-    print(statistics.stdev(diff(n, 0.003125, func)))
-    ```
-    вывод:
-    ```python
-    0.4198771533952976
-    ```
+
     ![2](https://github.com/georgedem975/applied_mathematics/blob/master/lab-1/assets/Figure_2.png)
+
+
+    При уменьшении h среднеквадратичное отклонение начинает стремиться к 0. Чем меньше h тем точнее ответ.
 
 ---
 
@@ -224,6 +217,8 @@ print(right_rect(0, 1, 1000, func_integral))
 
 ![3](https://github.com/georgedem975/applied_mathematics/blob/master/lab-1/assets/Figure_3.png)
 
+При уменьшении результат выполнения функций начинает стремиться к истинному значению.
+
 ___Примечания___
 
 * используемы библиотеки:
@@ -231,4 +226,5 @@ ___Примечания___
 import numpy as np
 import matplotlib.pyplot as plt
 import statistics
+import math
  ```

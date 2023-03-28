@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import statistics
+import math
 
 
 # дифференционарование
@@ -35,6 +36,10 @@ def left_diff(x0, delta, func):
 # функция(1)
 def func(x):
     return x * np.sin(x)
+
+
+def func_(x):
+    return x * np.cos(x) + np.sin(x)
 
 
 # функция(2)
@@ -131,22 +136,28 @@ if __name__ == '__main__':
     plt.legend(['(cos(x))', '(sin(x)*x)'])
     plt.show()
 
-    print(statistics.stdev(second_order_diff(n, 0.003125, func)))
+    #print(statistics.stdev(second_order_diff(n, 0.003125, func)))
 
-    r_1 = [statistics.stdev(right_diff(n, 0.025, func)),
-           statistics.stdev(right_diff(n, 0.0125, func)),
-           statistics.stdev(right_diff(n, 0.00625, func)),
-           statistics.stdev(right_diff(n, 0.003125, func))]
+    r_1 = [np.sqrt(math.fabs(np.mean(right_diff(n, 0.025, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(right_diff(n, 0.0125, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(right_diff(n, 0.00625, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(right_diff(n, 0.003125, func) - func_(n))))]
 
-    r_2 = [statistics.stdev(left_diff(n, 0.025, func)),
-           statistics.stdev(left_diff(n, 0.0125, func)),
-           statistics.stdev(left_diff(n, 0.00625, func)),
-           statistics.stdev(left_diff(n, 0.003125, func))]
+    print(r_1)
 
-    r_3 = [statistics.stdev(second_order_diff(n, 0.025, func)),
-           statistics.stdev(second_order_diff(n, 0.0125, func)),
-           statistics.stdev(second_order_diff(n, 0.00625, func)),
-           statistics.stdev(second_order_diff(n, 0.003125, func))]
+    r_2 = [np.sqrt(math.fabs(np.mean(left_diff(n, 0.025, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(left_diff(n, 0.0125, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(left_diff(n, 0.00625, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(left_diff(n, 0.003125, func) - func_(n))))]
+
+    print(r_2)
+
+    r_3 = [np.sqrt(math.fabs(np.mean(second_order_diff(n, 0.025, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(second_order_diff(n, 0.0125, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(second_order_diff(n, 0.00625, func) - func_(n)))),
+           np.sqrt(math.fabs(np.mean(second_order_diff(n, 0.003125, func) - func_(n))))]
+
+    print(r_3)
 
     plt.grid()
     plt.plot(r_1, r_1, 'ro', r_2, r_2, 'bo', r_3, r_3, 'go')
